@@ -13,10 +13,10 @@ namespace HXRd.Solid.Http.Extensions.SharpCompress
 
         public bool TarArchivesAreGziped { get; set; } = true;
 
-        public SharpCompressOptions() : this(new ReaderOptions(), new List<string>()) { }
-        public SharpCompressOptions(List<string> mimeTypes) : this(new ReaderOptions(), mimeTypes, true) { }
-        public SharpCompressOptions(ReaderOptions options, bool useDefaultMimeTypes = true) : this(options, new List<string>(), useDefaultMimeTypes) { }
-        public SharpCompressOptions(ReaderOptions options, List<string> mimeTypes, bool useDefaultMimeTypes = true)
+        public SharpCompressOptions() : this(new ReaderOptions(), new List<string>(), true, true) { }
+        public SharpCompressOptions(List<string> mimeTypes, bool useDefaultMimeTypes = true, bool tarArchivesAreGziped = true) : this(new ReaderOptions(), mimeTypes, useDefaultMimeTypes, tarArchivesAreGziped) { }
+        public SharpCompressOptions(ReaderOptions options, bool useDefaultMimeTypes = true, bool tarArchivesAreGziped = true) : this(options, new List<string>(), useDefaultMimeTypes, tarArchivesAreGziped) { }
+        public SharpCompressOptions(ReaderOptions options, List<string> mimeTypes, bool useDefaultMimeTypes = true, bool tarArchivesAreGziped = true)
         {
             var defaultMimeTypes = new List<string>
             {
@@ -27,6 +27,7 @@ namespace HXRd.Solid.Http.Extensions.SharpCompress
             };
             if (useDefaultMimeTypes)
                 mimeTypes.AddRange(defaultMimeTypes.Where(d => !mimeTypes.Any(m => m == d)));
+            TarArchivesAreGziped = tarArchivesAreGziped;
             ReaderOptions = options;
             MimeTypes = mimeTypes;
         }
