@@ -6,15 +6,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
 using SharpCompress.Archives.Zip;
-using Solid.Http.Extensions.SharpCompress.Abstraction;
+using HXRd.Solid.Http.Extensions.SharpCompress.Abstraction;
 using SharpCompress.Readers;
 using SharpCompress.Archives.Rar;
 using SharpCompress.Archives.GZip;
 using SharpCompress.Archives.SevenZip;
 using SharpCompress.Archives.Tar;
+using System.Linq;
 using SharpCompress.Readers.Zip;
 
-namespace Solid.Http.Extensions.SharpCompress
+namespace HXRd.Solid.Http.Extensions.SharpCompress
 {
     internal class SharpCompressResponseDeserializerFactory : IResponseDeserializerFactory
     {
@@ -80,11 +81,30 @@ namespace Solid.Http.Extensions.SharpCompress
             {
                 return async (content) =>
                 {
-                    var ms = new MemoryStream();
-                    await content.CopyToAsync(ms);
-                    ms.Position = 0;
-                    var arch = TarArchive.Open(ms, GetReaderOptions().ReaderOptions);
-                    return (T)((object)arch);
+                    if(GetReaderOptions().TarArchivesAreGziped)
+                    {
+                        var outerms = new MemoryStream();
+                        await content.CopyToAsync(outerms);
+                        outerms.Position = 0;
+                        var gzarch = GZipArchive.Open(outerms, GetReaderOptions().ReaderOptions);
+                        var entry = gzarch.Entries.FirstOrDefault();
+                        using (var readGzStream = entry.OpenEntryStream())
+                        {
+                            var innerms = new MemoryStream();
+                            readGzStream.CopyTo(innerms);
+                            innerms.Position = 0;
+                            var tararch = TarArchive.Open(innerms, GetReaderOptions().ReaderOptions);
+                            return (T)((object)tararch);
+                        }
+                    }
+                    else
+                    {
+                        var ms = new MemoryStream();
+                        await content.CopyToAsync(ms);
+                        ms.Position = 0;
+                        var arch = TarArchive.Open(ms, GetReaderOptions().ReaderOptions);
+                        return (T)((object)arch);
+                    }
                 };
             }
             else throw new NotSupportedException("Type not supported");

@@ -1,11 +1,11 @@
-﻿using Solid.Http.Extensions.SharpCompress.Abstraction;
+﻿using HXRd.Solid.Http.Extensions.SharpCompress.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using SharpCompress.Readers;
-using Solid.Http.Extensions.SharpCompress;
+using HXRd.Solid.Http.Extensions.SharpCompress;
 
-namespace Solid.Http.Extensions.SharpCompress.Providers
+namespace HXRd.Solid.Http.Extensions.SharpCompress.Providers
 {
     public class SharpCompressSerializerSettingsProvider : ISharpCompressSerializerSettingsProvider
     {

@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SharpCompress.Readers;
 using Solid.Http.Abstractions;
-using Solid.Http.Extensions.SharpCompress.Abstraction;
-using Solid.Http.Extensions.SharpCompress.Providers;
+using HXRd.Solid.Http.Extensions.SharpCompress.Abstraction;
+using HXRd.Solid.Http.Extensions.SharpCompress.Providers;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Solid.Http;
 
-namespace Solid.Http.Extensions.SharpCompress
+namespace HXRd.Solid.Http.Extensions.SharpCompress
 {
     public static class SolidHttpCoreBuilderExtensions
     {

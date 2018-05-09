@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Solid.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Solid.Http.Extensions.SharpCompress
+namespace HXRd.Solid.Http.Extensions.SharpCompress
 {
     public static class ResponseExtensions
     {
