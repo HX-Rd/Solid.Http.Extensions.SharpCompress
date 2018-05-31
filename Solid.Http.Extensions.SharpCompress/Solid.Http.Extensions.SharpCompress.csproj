@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>HXRd.Solid.Http.Extensions.SharpCompress</AssemblyName>
+    <RootNamespace>HXRd.Solid.Http.Extensions.SharpCompress</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
